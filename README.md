@@ -22,7 +22,7 @@ This GUI system is designed to facilitate the first piece inspection process in 
 1. Clone the repository to your local machine:
 
     ```bash
-    git clone https://github.com/yourusername/first-piece-inspection.git
+    git clone [https://github.com/yourusername/first-piece-inspection.git](https://github.com/AbhinandanGH/GUI-system-to-give-feedback-to-the-first-inspection-in-the-standard-room.git)
     ```
 
 2. Open the `index.html` file in a web browser to access the GUI.
