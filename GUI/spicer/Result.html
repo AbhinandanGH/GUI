@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="result.css">
+    <title>Result</title>
+
+</head>
+
+<body>
+    <form>
+    <header class="result111">Report</header>
+
+    <div class="Q">
+        <h2>
+            FirstName:<span id="FirstName1"></span>
+        </h2>
+
+        <h2>
+            LastName:<span id="LastName"></span>
+        </h2>
+
+        <h2>
+            WorkerId:<span id="WorkerId1"></span>
+        </h2>
+
+        <h2>
+            PartName:<span id="PartName1"></span>
+        </h2>
+
+        <h2>
+            PartId:<span id="PartId1"></span>
+        </h2>
+
+        <h2>
+            Date:<span id="Date1"></span>
+        </h2>
+
+        <h2>
+            LineNumber:<span id="LineNumbe1"></span>
+        </h2>
+    </div>
+
+
+    <div class="container">
+        <button type="submit" class="btn" onclick="openpopup()">OK</button>
+    </div>
+
+
+    <div class="container1">
+        <a href="index.html">
+            <input type="button" class="NOT-OK"  value="NOT-OK">
+        </a>
+        
+    </div>
+
+
+
+
+    <script>
+
+        
+
+        let popup = document.getElementById("popup");
+
+        function openpopup() {
+            popup.classList.add("open-popup")
+        }
+
+        function closepopup() {
+            popup.classList.remove("open-popup")
+        }
+
+
+        window.addEventListener('load', () => {
+
+            //const params = (new URL(document.location)).searchParams;
+            //const FirstName = params.get('FirstName');
+            //const LastName = params.get('LastName');
+
+
+
+            const LastName = localStorage.getItem('LastName')
+            const FirstName1 = localStorage.getItem('FirstName1')
+            const WorkerId1 = localStorage.getItem('WorkerId1')
+            const PartName1 = localStorage.getItem('PartName1')
+            const PartId1 = localStorage.getItem('PartId1')
+            const Date1 = localStorage.getItem('Date1')
+            const LineNumbe1 = localStorage.getItem('LineNumbe1')
+
+
+            document.getElementById('LastName').innerHTML = LastName;
+            document.getElementById('FirstName1').innerHTML = FirstName1;
+            document.getElementById('WorkerId1').innerHTML = WorkerId1;
+            document.getElementById('PartName1').innerHTML = PartName1;
+            document.getElementById('PartId1').innerHTML = PartId1;
+            document.getElementById('Date1').innerHTML = Date1;
+            document.getElementById('LineNumbe1').innerHTML = LineNumbe1;
+        })
+
+
+
+
+
+
+
+    </script>
+
+</form>
+
+</body>
+
+</html>

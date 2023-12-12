@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<!--=== Coding by CodingLab | www.codinglabweb.com === -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!----======== CSS ======== -->
+    <link rel="stylesheet" href="style.css">
+     
+    <!----===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="styling.css">
+
+    <!--<title>Responsive Regisration Form </title>--> 
+</head>
+<body>
+    <div class="container">
+        <header>Registration</header>
+
+        <form name="google-sheet" action="Result.html"  method="POST">
+            <div class="form first">
+                <div class="details personal">
+                    <span class="title">Personal Details</span>
+
+                    <div class="fields">
+                        <div class="input-field">
+                            <label>First Name</label>
+                            <input type="text" id="FirstName1" name="FirstName1" placeholder="Enter your First Name" required>
+                        </div>
+ 
+
+
+                        <div class="input-field">
+                            <label>Last Name</label>
+                            <input type="text" name="LastName" id="LastName" placeholder="Enter your Last Name" required>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Email</label>
+                            <input type="text" name="Email" id="LastName" placeholder="Enter your Email-ID " required>
+                        </div>
+                        
+
+                        <div class="input-field">
+                            <label>Worker Id</label>
+                            <input type="text" name="WorkerId1" id="WorkerId1" placeholder="Enter Worker-Id" required>
+                        </div>
+                    </div>
+                </div>
+
+                        
+                        <div class="NEXT123">
+                            <a href="index6.html">
+                                <span class="NEXT123">NEXT </span>
+                            </a>
+                          
+                        <!-- </div>
+
+                        <div class="123">
+                               <input type="reset" value="Reset"> 
+                        </div> -->
+
+                        <!-- <div class="123">
+                            <input type="button" value="send" onclick="sendMail()"> 
+                     </div> -->
+                    </div> 
+
+                    <!-- <input type="reset" value="Reset" class="Reset"> -->
+
+                    <button class="nextBtn">
+                        <span class="btnText">Submit</span>
+                        <i class="uil uil-navigator"></i>
+                    </button>
+                    
+                </div> 
+
+            </div>
+
+        </form>
+    </div>
+
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwslcbQL-q6oLvDdEf_sjhAsl5egl6sxOU-k0m4VkIO6VYFkeScc9-B2v_2qb9py4TSbw/exec'
+        const form = document.forms['google-sheet']
+     
+        form.addEventListener('submit', e => {
+          e.preventDefault()
+          fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => alert("Thanks for Contacting us..! We Will Contact You Soon..."))
+            .catch(error => console.error('Error!', error.message))
+        })
+
+   
+
+
+       function handleSubmit()
+       {
+        
+           const LastName = document.getElementById('LastName').value;
+           const FirstName1 = document.getElementById('FirstName1').value;
+           const WorkerId1 = document.getElementById('WorkerId1').value;
+           
+           
+
+
+
+           
+           localStorage.setItem("LastName",LastName);
+           localStorage.setItem("FirstName1",FirstName1);
+           localStorage.setItem("WorkerId1",WorkerId1);
+          
+           
+
+           return;
+
+
+       }
+
+
+   </script>
+
+
+   <!--<script src="script.js"></script>-->
+</body>
+</html>

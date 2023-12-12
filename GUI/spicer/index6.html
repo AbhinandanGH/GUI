@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Excel File Reader with Yes/No Buttons (Save Responses)</title>
+  <style>
+    /* Basic styling for the table and buttons */
+
+    input[type="file"] {
+      display: none;
+    }
+
+    #fileLabel,
+    #downloadButton,
+    .next-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-right: 10px;
+      margin-bottom: 10px; /* Added margin-bottom */
+    }
+    #fileLabel:hover,
+    #downloadButton:hover,
+    .next-button:hover {
+      background-color: #5DADE2;
+    }
+    
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+      font-family: Arial, sans-serif;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .button-container {
+      display: flex;
+      align-items: center;
+    }
+    .yes-no-button {
+      margin-right: 5px;
+      padding: 6px 10px;
+      font-size: 14px;
+      cursor: pointer;
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+    .yes-no-button:hover {
+      background-color: #5DADE2;
+    }
+
+    .next-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .next-button:hover {
+      background-color: #5DADE2;
+    }
+
+
+  </style>
+</head>
+<body>
+  <input type="file" id="fileInput" accept=".xlsx, .xls" />
+  <label for="fileInput" id="fileLabel" onclick="document.getElementById('fileInput').click()">Choose File</label>
+  <div id="excelData"></div>
+
+<button onclick="downloadResponses()" id="downloadButton">Download Responses</button>
+<a href="Mail.html">
+    <button class="next-button">Next</button>
+</a>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.0/xlsx.full.min.js"></script>
+  <script>
+    let excelData; // Variable to hold Excel data
+    const responses = []; // Array to store user responses
+
+    document.getElementById('fileInput').addEventListener('change', handleFile);
+
+    function handleFile(e) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function(event) {
+        const data = new Uint8Array(event.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
+
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+
+        excelData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+        displayExcelData(excelData);
+      };
+
+      reader.onerror = function(event) {
+        console.error("File could not be read! Code " + event.target.error.code);
+      };
+
+      reader.readAsArrayBuffer(file);
+    }
+    
+    function displayExcelData(data) {
+      const tableDiv = document.getElementById('excelData');
+      const table = document.createElement('table');
+
+      for (let i = 0; i < data.length; i++) {
+        const row = document.createElement('tr');
+
+        for (let j = 0; j < data[i].length; j++) {
+          const cell = document.createElement(i === 0 ? 'th' : 'td');
+          cell.textContent = data[i][j];
+          row.appendChild(cell);
+        }
+
+        if (i !== 0 && !isEmptyRow(data[i])) {
+          const buttonCell = document.createElement('td');
+          const buttonContainer = document.createElement('div');
+          buttonContainer.classList.add('button-container');
+
+          const yesButton = document.createElement('button');
+          yesButton.classList.add('yes-no-button');
+          yesButton.textContent = 'Yes';
+          yesButton.onclick = function() {
+            saveRowData(i, 'Yes');
+          };
+
+          const noButton = document.createElement('button');
+          noButton.classList.add('yes-no-button');
+          noButton.textContent = 'No';
+          noButton.onclick = function() {
+            saveRowData(i, 'No');
+            noButton.onclick = redirectToForm; // Redirect to the form page when "No" is clicked
+          };
+
+          buttonContainer.appendChild(yesButton);
+          buttonContainer.appendChild(noButton);
+          buttonCell.appendChild(buttonContainer);
+          row.appendChild(buttonCell);
+        }
+
+        table.appendChild(row);
+      }
+
+      tableDiv.innerHTML = '';
+      tableDiv.appendChild(table);
+    }
+
+    function isEmptyRow(row) {
+      return row.every(cell => cell === null || cell === '');
+    }
+
+    function saveRowData(rowNumber, response) {
+      const responseRow = excelData[rowNumber];
+      responseRow.push(response); // Add response to the row
+      responses.push(responseRow); // Store the row with response in the array
+    }
+
+    function downloadResponses() {
+      const ws = XLSX.utils.aoa_to_sheet(responses);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Responses");
+      XLSX.writeFile(wb, "all_responses.xlsx");
+    }
+
+         
+
+
+  </script>
+ 
+</body>
+</html>

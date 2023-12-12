@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PDF Viewer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    #pdfContainer {
+      width: 100%;
+      height: 70vh; /* Adjust the height as needed */
+      border: 1px solid #ccc;
+    }
+    input[type="file"] {
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Review</h1>
+  <input type="file" id="fileInput" accept=".pdf">
+  <br>
+  <div id="pdfContainer"></div>
+
+  <script>
+    document.getElementById('fileInput').addEventListener('change', function() {
+      var file = this.files[0];
+      var fileReader = new FileReader();
+
+      fileReader.onload = function(event) {
+        var pdfUrl = event.target.result;
+        var pdfHtml = '<embed src="' + pdfUrl + '" type="application/pdf" width="100%" height="100%" />';
+        document.getElementById('pdfContainer').innerHTML = pdfHtml;
+      };
+
+      fileReader.onerror = function(event) {
+        console.error("File could not be read! Code " + event.target.error.code);
+      };
+
+      fileReader.readAsDataURL(file);
+    });
+  </script>
+
+<div class="container">
+    <a href="index2.html">
+        <input type="button" class="btn" value="OK">
+    </a>
+  
+</div>
+
+
+<div class="container1">
+    <a href="index.html">
+        <input type="button" class="NOT-OK"  value="NOT-OK">
+    </a>
+    
+</div>
+
+<style>
+
+.container1{
+    margin-top: 0px;
+  display: flex;
+  justify-content: left;
+}
+
+
+    .container {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  }
+  
+  /* Button styles */
+  .btn, .NOT-OK {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 50px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: background-color 0.3s ease;
+  }
+  
+  .NOT-OK {
+  background-color: #f44336;
+  }
+  
+</style>
+</body>
+</html>
